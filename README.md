@@ -9,12 +9,12 @@ This repo contains tools to install an all in one contrail cloud on a vagrant pr
 ## Installation Overview
 
 1. #### [Install Vagrant](https://www.vagrantup.com/downloads.html)
-   *Download the appropriate package for your opertaing system and install vagrant*
+   _Download the appropriate package for your opertaing system and install vagrant_
    Vagrant plugins to be installed
 	 		* `$ vagrant plugin install vagrant-reload`
 
 2. #### Adding vagrant box 
-   * `$ vagrant box add contrail/ubuntu-14.04.4 ubuntu-14.04-amd64-contrail.box`* 
+   * `$ vagrant box add contrail/ubuntu-14.04.4 ubuntu-14.04-amd64-contrail.box`
 
 3. #### Clone the contrail-vagrant repository
    * `$ git clone https://github.com/madhukar32/contrail-vagrant.git`
@@ -26,16 +26,16 @@ This repo contains tools to install an all in one contrail cloud on a vagrant pr
    * `$ cp /path/to/file/contrail-install-packages-1.xx-xxx~openstack_version_all.deb repo/`
 
 6. #### Edit Vagrantfile and testbed.py files
-	 * Edit testbed.py file to update your storage memory field as per your hosts availability **(min 16GB)**
+	* Edit testbed.py file to update your storage memory field as per your hosts availability **(min 16GB)**
 			`minimum_diskGB = 16` 
-	 * Edit Vagrantfile to update your vcpus and ram needed for the guest vm
-			`ruby
-			 config.vm.provider "virtualbox" do |vb|
-			 ## Customize the amount of memory on the VM:
-      				vb.memory = "16384"
-      				vb.cpus = 8
-  			 end
-			`
+	* Edit Vagrantfile to update your vcpus and ram needed for the guest vm
+	```ruby
+		config.vm.provider "virtualbox" do |vb|
+		## Customize the amount of memory on the VM:
+			vb.memory = "16384"
+			vb.cpus = 8
+		end
+	```
 
 ## Bring up the contrail cloud by single command
 	`vagrant up`
