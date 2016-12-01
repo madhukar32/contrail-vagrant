@@ -29,13 +29,13 @@ This repo contains tools to install an all in one contrail cloud on a vagrant pr
 	 * Edit testbed.py file to update your storage memory field as per your hosts availability **(min 16GB)**
 			`minimum_diskGB = 16` 
 	 * Edit Vagrantfile to update your vcpus and ram needed for the guest vm
-			```ruby
-			   config.vm.provider "virtualbox" do |vb|
-			   ## Customize the amount of memory on the VM:
-      			vb.memory = "16384"
-      			vb.cpus = 8
+			`ruby
+			 config.vm.provider "virtualbox" do |vb|
+			 ## Customize the amount of memory on the VM:
+      				vb.memory = "16384"
+      				vb.cpus = 8
   			 end
-			```
+			`
 
 ## Bring up the contrail cloud by single command
 	`vagrant up`
