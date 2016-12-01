@@ -10,7 +10,7 @@ This repo contains tools to install an all in one contrail cloud on a vagrant pr
 
 1. #### [Install Vagrant](https://www.vagrantup.com/downloads.html)
    _Download the appropriate package for your opertaing system and install vagrant_
-   Vagrant plugins to be installed
+Vagrant plugins to be installed
 	* `$ vagrant plugin install vagrant-reload`
 
 2. #### Adding vagrant box 
