@@ -5,6 +5,7 @@
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
+beginning_time = Time.now
 Vagrant.configure("2") do |config|
   # The most common configuration options are documented and commented below.
   # For a complete reference, please see the online documentation at
@@ -21,6 +22,7 @@ Vagrant.configure("2") do |config|
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
+  
   config.vm.network "forwarded_port", guest: 8080, host: 8080
   config.vm.network "forwarded_port", guest: 80, host: 9580
   config.vm.network "forwarded_port", guest: 8082, host: 8082
@@ -58,3 +60,5 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", path: "scripts/fab_setup_all.sh"
   config.vm.provision :reload
 end
+end_time = Time.now
+puts "Time elapsed #{((end_time - beginning_time)*1000)/60000} minutes"
