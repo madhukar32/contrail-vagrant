@@ -12,9 +12,10 @@ This repo contains tools to install an all in one contrail cloud on a vagrant pr
     *   [For centos guest OS](https://wiki.centos.org/HowTos/Virtualization/VirtualBox)
 
 2. ##### Install Vagrant
-    Download the appropriate [package](https://www.vagrantup.com/downloads.html) for your opertaing system and install vagrant
-    _Vagrant plugins to be installed_
-    `$ vagrant plugin install vagrant-reload`
+    * Download the appropriate [package](https://www.vagrantup.com/downloads.html) for your opertaing system and install vagrant
+    * Vagrant plugins to be installed
+
+        `$ vagrant plugin install vagrant-reload`
 
 ## Steps to provision contrail using vagrant
 1. ##### Adding vagrant box
@@ -31,12 +32,16 @@ This repo contains tools to install an all in one contrail cloud on a vagrant pr
 
 5. ##### Edit Vagrantfile and testbed.py files
     * Edit testbed.py file to update your storage memory field as per your hosts availability **(min 16GB)**
+
         `$ vi testbed.py`
-        ````bash
+
+        ```bash
             minimum_diskGB = 16
-        ````
+        ```
     * Edit Vagrantfile to update your vcpus and ram needed for the guest vm
+
         `$ vi Vagrantfile`
+        
         ```ruby
                 config.vm.provider "virtualbox" do |vb|
                 ## Customize the amount of memory on the VM:
@@ -46,4 +51,5 @@ This repo contains tools to install an all in one contrail cloud on a vagrant pr
         ```
 
 6. ##### Bring up the contrail cloud by single command
-        `vagrant up`
+
+    `$ time vagrant up`
