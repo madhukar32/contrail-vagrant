@@ -1,0 +1,107 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+#ip route add 10.87.64.0/24 dev eth1
+$script = <<SCRIPT
+route add default gw 10.87.64.254
+SCRIPT
+
+Vagrant.configure("2") do |config|
+
+  controller_ip  = ["10.87.64.136", "10.87.64.137"]
+  analytics_ip   = ["10.87.64.138", "10.87.64.139"]
+  analyticsdb_ip = ["10.87.64.159", "10.87.64.160"]
+  
+  (0..1).each do |id|
+
+    controller   = "controller-new"  + id.to_s
+    analytics    = "analytics-new"   + id.to_s
+    analyticsdb  = "analyticsdb-new" + id.to_s
+
+    config.vm.define controller do |contrail_controller|
+      contrail_controller.vm.box = "contrail/ubuntu-14.04"
+      contrail_controller.vm.hostname = controller
+
+      contrail_controller.vm.network "public_network", auto_config: false, bridge: "em1"
+
+      contrail_controller.vm.provider "virtualbox" do |vb|
+        vb.memory = "16000"
+        vb.cpus = 4
+      end
+
+      #shell set default gateway
+      contrail_controller.vm.provision "shell",
+        run: "always",
+        inline: "ifconfig eth1 #{controller_ip[id]} netmask 255.255.255.0 up"
+
+      contrail_controller.vm.provision "shell",
+        run: "always",
+        inline: $script
+    end
+
+    config.vm.define analytics do |contrail_analytics|
+      contrail_analytics.vm.box = "contrail/ubuntu-14.04"
+      contrail_analytics.vm.hostname = analytics
+
+      contrail_analytics.vm.network "public_network", auto_config: false, bridge: "em1"
+
+      contrail_analytics.vm.provider "virtualbox" do |vb|
+        vb.memory = "16000"
+        vb.cpus = 4
+      end
+
+      #shell set default gateway
+      contrail_analytics.vm.provision "shell",
+        run: "always",
+        inline: "ifconfig eth1 #{analytics_ip[id]} netmask 255.255.255.0 up"
+
+      contrail_analytics.vm.provision "shell",
+        run: "always",
+        inline: $script 
+    end
+
+    config.vm.define analyticsdb do |contrail_analyticsdb|
+      contrail_analyticsdb.vm.box = "contrail/ubuntu-14.04"
+      contrail_analyticsdb.vm.hostname = analyticsdb
+
+      contrail_analyticsdb.vm.network "public_network", auto_config: false, bridge: "em1"
+
+      contrail_analyticsdb.vm.provider "virtualbox" do |vb|
+        vb.memory = "16000"
+        vb.cpus = 4
+      end
+
+      #shell set default gateway
+      contrail_analyticsdb.vm.provision "shell",
+        run: "always",
+        inline: "ifconfig eth1 #{analyticsdb_ip[id]} netmask 255.255.255.0 up"
+
+      contrail_analyticsdb.vm.provision "shell",
+        run: "always",
+        inline: $script
+    end
+  end
+  
+  openstack0_ip = "10.87.64.165"
+  openstack   = "openstack"  + 0.to_s
+  config.vm.define openstack do |openstack0|
+    openstack0.vm.box = "contrail/ubuntu-14.04"
+    openstack0.vm.hostname = openstack
+      
+    openstack0.vm.network "public_network", auto_config: false, bridge: "em1"
+
+    openstack0.vm.provider "virtualbox" do |vb|
+      vb.memory = "16000"
+      vb.cpus = 4
+    end
+
+    #shell set default gateway
+    openstack0.vm.provision "shell",
+      run: "always",
+      inline: "ifconfig eth1 #{openstack0_ip} netmask 255.255.255.0 up"
+
+    openstack0.vm.provision "shell",
+      run: "always",
+      inline: $script
+  end
+end
